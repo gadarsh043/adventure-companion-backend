@@ -1,7 +1,14 @@
 const express = require('express');
 const fetch = require('node-fetch');
+const cors = require('cors');  // Add this
 const app = express();
+
 app.use(express.json());
+app.use(cors({
+  origin: ['http://localhost:8888', 'https://adventure-companion.netlify.app'],  // Allow these origins
+  methods: ['POST'],  // Only POST needed
+  allowedHeaders: ['Content-Type', 'X-DeepSeek-API-Key']  // Headers we use
+}));
 
 app.post('/api/plan', async (req, res) => {
   const { city, hours } = req.body;
